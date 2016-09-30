@@ -21,30 +21,21 @@ def send_message(bot, session):
 
         list_schedule = [user_schedule.fajr, user_schedule.voshod_solnsa, user_schedule.dhuhr, user_schedule.hanafi, user_schedule.shafigi,
                          user_schedule.magrib, user_schedule.isha]
-        intervals = []
-        interval_dict={}
-        for time in list_schedule:
-            interval = time - dt.now()
-            intervals += [interval]
-
-        list_closer = []
-
-        for interval in intervals:
-            if interval.days != -1:
-                list_closer += [interval]
+        a = (lambda x: x - dt.now())
+        intervals = [a(time) for time in list_schedule]
+        list_closer = [a(time) for time in list_schedule if a(time).days != -1]
 
         if len(list_closer) == 0:
             return
 
         min_time = min(list_closer)
 
-        interval_dict['Фаджр'] = intervals[0]
-        interval_dict['Восход солнца'] = intervals[1]
-        interval_dict['Зауаль'] = intervals[2]
-        interval_dict['Аср по первой тени'] = intervals[3]
-        interval_dict['Аср по второй тени'] = intervals[4]
-        interval_dict['Магриб'] = intervals[5]
-        interval_dict['Иша'] = intervals[6]
+        interval_dict = {}
+
+        names_namaz = ['Фаджр', 'Восход солнца', 'Зауаль', 'Аср по первой тени', 'Аср по второй тени', 'Магриб', 'Иша']
+
+        for x, y in zip(names_namaz, intervals):
+            interval_dict[x] = y
 
         for key in interval_dict:
             if interval_dict[key] == min_time and  min_time.seconds <= 5 * 60:
