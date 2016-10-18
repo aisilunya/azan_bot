@@ -111,7 +111,7 @@ def get_schedule(message):
         user_schedule.magrib1 = dt.strftime(user_schedule.magrib, "%H:%M")
         user_schedule.isha1 = dt.strftime(user_schedule.isha, "%H:%M")
         bot.send_message(message.chat.id,
-                        text="Расписание намаза на сегодня %s для города %s: \n Фаджр %s\n Восход солнца %s\n Зауаль %s\n Аср по первой тени %s\n Аср по второй тени %s\n Магриб %s\n Иша %s" %
+                        text="Расписание намаза на сегодня %s для города %s: \n Фаджр %s\n Восход солнца %s\n Зухр %s\n Аср по первой тени %s\n Аср по второй тени %s\n Магриб %s\n Иша %s" %
                             (user_schedule.fajr22,user_schedule.city, user_schedule.fajr11, user_schedule.voshod_solnsa1, user_schedule.dhuhr1, user_schedule.hanafi1,
                             user_schedule.shafigi1, user_schedule.magrib1, user_schedule.isha1))
 @bot.message_handler(regexp= 'Ближайший намаз')
@@ -139,7 +139,7 @@ def get_closertime(message):
 
         interval_dict = {}
 
-        names_namaz = ['Фаджр', 'Восход солнца', 'Зауаль', 'Аср по первой тени', 'Аср по второй тени', 'Магриб', 'Иша']
+        names_namaz = ['Фаджр', 'Восход солнца', 'Зухр', 'Аср по первой тени', 'Аср по второй тени', 'Магриб', 'Иша']
 
         for x, y in zip(names_namaz, intervals):
             interval_dict[x] = y

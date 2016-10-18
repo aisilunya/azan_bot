@@ -32,14 +32,14 @@ def send_message(bot, session):
 
         interval_dict = {}
 
-        names_namaz = ['Фаджр', 'Восход солнца', 'Зауаль', 'Аср по первой тени', 'Аср по второй тени', 'Магриб', 'Иша']
+        names_namaz = ['Фаджр', 'Восход солнца', 'Зухр', 'Аср по первой тени', 'Аср по второй тени', 'Магриб', 'Иша']
 
         for x, y in zip(names_namaz, intervals):
             interval_dict[x] = y
 
         for key in interval_dict:
             if interval_dict[key] == min_time and  min_time.seconds <= 5 * 60:
-                bot.send_message(user.chat_id, text='Следующий намаз {name} через  5 минут '.format(name=key))
+                bot.send_message(user.chat_id, text='{name} через  5 минут '.format(name=key))
                 user.last_sended = dt.now()
                 session.commit()
 
