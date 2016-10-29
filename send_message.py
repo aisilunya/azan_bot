@@ -21,24 +21,30 @@ def send_message(bot, session):
 
         list_schedule = [user_schedule.fajr, user_schedule.voshod_solnsa, user_schedule.dhuhr, user_schedule.hanafi, user_schedule.shafigi,
                          user_schedule.magrib, user_schedule.isha]
-        a = (lambda x: x - dt.now())
-        intervals = [a(time) for time in list_schedule]
-        list_closer = [a(time) for time in list_schedule if a(time).days != -1]
 
-        if len(list_closer) == 0:
-            return
+        time_intervals = []
+        for time in list_schedule:
+            interval = time - dt.now()
+            time_intervals += [interval]
+
+        list_closer = []
+        intervals = {}
+        for interval in time_intervals:
+            if interval.days != -1:
+                list_closer += [interval]
 
         min_time = min(list_closer)
 
-        interval_dict = {}
+        intervals['Фаджр'] = time_intervals[0]
+        intervals['Восход солнца'] = time_intervals[1]
+        intervals['Зауаль'] = time_intervals[2]
+        intervals['Аср по первой тени'] = time_intervals[3]
+        intervals['Аср по второй тени'] = time_intervals[4]
+        intervals['Магриб'] = time_intervals[5]
+        intervals['Иша'] = time_intervals[6]
 
-        names_namaz = ['Фаджр', 'Восход солнца', 'Зухр', 'Аср по первой тени', 'Аср по второй тени', 'Магриб', 'Иша']
-
-        for x, y in zip(names_namaz, intervals):
-            interval_dict[x] = y
-
-        for key in interval_dict:
-            if interval_dict[key] == min_time and  min_time.seconds <= 5 * 60:
+        for key in intervals:
+            if intervals[key] == min_time and  min_time.seconds <= 5 * 60:
                 bot.send_message(user.chat_id, text='{name} через  5 минут '.format(name=key))
                 user.last_sended = dt.now()
                 session.commit()

@@ -126,33 +126,48 @@ def get_closertime(message):
             filter(Schedule.city == user.city).first()
         list_schedule = [user_schedule.fajr, user_schedule.voshod_solnsa, user_schedule.dhuhr, user_schedule.hanafi, user_schedule.shafigi, user_schedule.magrib,user_schedule.isha]
 
-        a = (lambda x: x - dt.now())
+        time_intervals = []
+        for time in list_schedule:
+            interval = time - dt.now()
+            time_intervals += [interval]
 
-        intervals = [a(time) for time in list_schedule]
-        list_closer = [a(time) for time in list_schedule if a(time).days != -1]
+        list_closer = []
+        intervals = {}
+        for interval in time_intervals:
+            if interval.days != -1:
+                list_closer += [interval]
 
         if len(list_closer) == 0:
-            bot.send_message(message.chat.id, text= 'Следующий намаз завтра')
+            bot.send_message(message.chat.id, text='Следующий намаз завтра')
             return
-        
         min_time = min(list_closer)
 
-        interval_dict = {}
+        intervals['Фаджр'] = time_intervals[0]
+        intervals['Восход солнца'] = time_intervals[1]
+        intervals['Зауаль'] = time_intervals[2]
+        intervals['Аср по первой тени'] = time_intervals[3]
+        intervals['Аср по второй тени'] = time_intervals[4]
+        intervals['Магриб'] = time_intervals[5]
+        intervals['Иша'] = time_intervals[6]
 
-        names_namaz = ['Фаджр', 'Восход солнца', 'Зухр', 'Аср по первой тени', 'Аср по второй тени', 'Магриб', 'Иша']
 
-        for x, y in zip(names_namaz, intervals):
-            interval_dict[x] = y
-
-        for key in dict:
-            if dict[key] == min_time:
+        for key in intervals:
+            if intervals[key] == min_time and key != "Восход солнца":
                 change_time = ':'.join(str(min_time).split(':')[:2])
-                if change_time[0] == '0':
+                if change_time[0] == '0' :
                     bot.send_message(message.chat.id, text='Следующий намаз {n} через {name[2]}{name[3]} минут(ы)'.format(n = key, name=change_time))
                 else:
                     bot.send_message(message.chat.id,
-                                     text='Следующий намаз {n} через {name[0]} час(ов) {name[2]}{name[3]} минут(ы)'.format(
-                                         n=key, name=change_time))
+                                text='Следующий намаз {n} через {name[0]} час(ов) {name[2]}{name[3]} минут(ы)'.format(
+                                    n=key, name=change_time))
+            elif intervals[key] == min_time and key == "Восход солнца":
+                change_time = ':'.join(str(min_time).split(':')[:2])
+                if change_time[0] == '0' :
+                    bot.send_message(message.chat.id, text='{n} через {name[2]}{name[3]} минут(ы)'.format(n = key, name=change_time))
+                else:
+                    bot.send_message(message.chat.id,
+                                text='{n} через {name[0]} час(ов) {name[2]}{name[3]} минут(ы)'.format(
+                                    n=key, name=change_time))
         return
 
 
