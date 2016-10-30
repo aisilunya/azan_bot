@@ -145,7 +145,7 @@ def get_closertime(message):
 
         dict['Фаджр'] = intervals[0]
         dict['Восход солнца'] = intervals[1]
-        dict['Зауаль'] = intervals[2]
+        dict['Зухр'] = intervals[2]
         dict['Аср по первой тени'] = intervals[3]
         dict['Аср по второй тени'] = intervals[4]
         dict['Магриб'] = intervals[5]

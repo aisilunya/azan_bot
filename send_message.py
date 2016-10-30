@@ -40,7 +40,7 @@ def send_message(bot, session):
 
         interval_dict['Фаджр'] = intervals[0]
         interval_dict['Восход солнца'] = intervals[1]
-        interval_dict['Зауаль'] = intervals[2]
+        interval_dict['Зухр'] = intervals[2]
         interval_dict['Аср по первой тени'] = intervals[3]
         interval_dict['Аср по второй тени'] = intervals[4]
         interval_dict['Магриб'] = intervals[5]
