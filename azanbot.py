@@ -125,14 +125,14 @@ def get_closertime(message):
             filter(cast(Schedule.hanafi, Date) == date.today()). \
             filter(Schedule.city == user.city).first()
         list_schedule = [user_schedule.fajr, user_schedule.voshod_solnsa, user_schedule.dhuhr, user_schedule.hanafi, user_schedule.shafigi, user_schedule.magrib,user_schedule.isha]
-        intervals = []
+        time_intervals = []
         for time in list_schedule:
             interval = time-dt.now()
-            intervals += [interval]
+            time_intervals += [interval]
 
         list_closer=[]
-        dict = {}
-        for interval in intervals:
+        intervals = {}
+        for interval in time_intervals:
             if interval.days != -1:
                 list_closer +=[interval]
 
@@ -143,16 +143,16 @@ def get_closertime(message):
 
 
 
-        dict['Фаджр'] = intervals[0]
-        dict['Восход солнца'] = intervals[1]
-        dict['Зухр'] = intervals[2]
-        dict['Аср по первой тени'] = intervals[3]
-        dict['Аср по второй тени'] = intervals[4]
-        dict['Магриб'] = intervals[5]
-        dict['Иша'] = intervals[6]
+        intervals['Фаджр'] = time_intervals[0]
+        intervals['Восход солнца'] = time_intervals[1]
+        intervals['Зухр'] = time_intervals[2]
+        intervals['Аср по первой тени'] = time_intervals[3]
+        intervals['Аср по второй тени'] = time_intervals[4]
+        intervals['Магриб'] = time_intervals[5]
+        intervals['Иша'] = time_intervals[6]
 
-        for key in dict:
-            if dict[key] == min_time:
+        for key in intervals:
+            if intervals[key] == min_time:
                 change_time = ':'.join(str(min_time).split(':')[:2])
                 if change_time[0] == '0':
                     bot.send_message(message.chat.id, text='Следующий намаз {n} через {name[2]}{name[3]} минут(ы)'.format(n = key, name=change_time))
