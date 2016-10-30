@@ -48,7 +48,7 @@ def send_message(bot, session):
 
         for key in intervals:
             if intervals[key] == min_time and  min_time.seconds <= 5 * 60:
-                bot.send_message(user.chat_id, text='Следующий намаз {name} через  5 минут '.format(name=key))
+                bot.send_message(user.chat_id, text='{name} через  5 минут '.format(name=key))
                 user.last_sended = dt.now()
                 session.commit()
 

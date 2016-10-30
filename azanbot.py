@@ -111,7 +111,7 @@ def get_schedule(message):
         user_schedule.magrib1 = dt.strftime(user_schedule.magrib, "%H:%M")
         user_schedule.isha1 = dt.strftime(user_schedule.isha, "%H:%M")
         bot.send_message(message.chat.id,
-                        text="Расписание намаза на сегодня %s для города %s: \n Фаджр %s\n Восход солнца %s\n Зауаль %s\n Аср по первой тени %s\n Аср по второй тени %s\n Магриб %s\n Иша %s" %
+                        text="Расписание намаза на сегодня %s для города %s: \n Фаджр %s\n Восход солнца %s\n Зухр %s\n Аср по первой тени %s\n Аср по второй тени %s\n Магриб %s\n Иша %s" %
                             (user_schedule.fajr22,user_schedule.city, user_schedule.fajr11, user_schedule.voshod_solnsa1, user_schedule.dhuhr1, user_schedule.hanafi1,
                             user_schedule.shafigi1, user_schedule.magrib1, user_schedule.isha1))
 @bot.message_handler(regexp= 'Ближайший намаз')
@@ -152,7 +152,7 @@ def get_closertime(message):
         intervals['Иша'] = time_intervals[6]
 
         for key in intervals:
-            if intervals[key] == min_time:
+            if intervals[key] == min_time and key != "Восход солнца":
                 change_time = ':'.join(str(min_time).split(':')[:2])
                 if change_time[0] == '0':
                     bot.send_message(message.chat.id, text='Следующий намаз {n} через {name[2]}{name[3]} минут(ы)'.format(n = key, name=change_time))
@@ -160,6 +160,18 @@ def get_closertime(message):
                     bot.send_message(message.chat.id,
                                      text='Следующий намаз {n} через {name[0]} час(ов) {name[2]}{name[3]} минут(ы)'.format(
                                          n=key, name=change_time))
+
+            elif intervals[key] == min_time and key == "Восход солнца":
+                change_time = ':'.join(str(min_time).split(':')[:2])
+                if change_time[0] == '0':
+                    bot.send_message(message.chat.id,
+                                    text='{n} через {name[2]}{name[3]} минут(ы)'.format(n=key,
+                                                                                                     name=change_time))
+                else:
+                    bot.send_message(message.chat.id,
+                                    text='{n} через {name[0]} час(ов) {name[2]}{name[3]} минут(ы)'.format(
+                                        n=key, name=change_time))
+
         return
 
 
