@@ -20,16 +20,16 @@ class Schedule(Base):
     shafigi = Column(DateTime(timezone=False))
     magrib =Column(DateTime(timezone=False))
     isha = Column(DateTime(timezone=False))
-    __table_args__ = (UniqueConstraint('city', 'fajr', 'voshod_solnsa','dhuhr', 'hanafi', 'shafigi', 'magrib', 'isha'),)
+    __table_args__ = (UniqueConstraint('city', 'fajr', 'voshod_solnsa','dhuhr', 'hanafi', 'magrib', 'isha'),)
 
-    def __init__(self, city, fajr, voshod_solnsa, dhuhr, hanafi, shafigi, magrib, isha):
+    def __init__(self, city, fajr, voshod_solnsa, dhuhr, hanafi, magrib, isha):
 
         self.city = city
         self.fajr = fajr
         self.voshod_solnsa = voshod_solnsa
         self.dhuhr = dhuhr
         self.hanafi = hanafi
-        self.shafigi = shafigi
+
         self.magrib = magrib
         self.isha = isha
 

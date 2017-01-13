@@ -19,7 +19,7 @@ def send_message(bot, session):
             filter(cast(Schedule.hanafi, Date) == date.today()). \
             filter(Schedule.city == Users.city).first()
 
-        list_schedule = [user_schedule.fajr, user_schedule.voshod_solnsa, user_schedule.dhuhr, user_schedule.hanafi, user_schedule.shafigi,
+        list_schedule = [user_schedule.fajr, user_schedule.voshod_solnsa, user_schedule.dhuhr, user_schedule.hanafi,
                          user_schedule.magrib, user_schedule.isha]
         time_intervals = []
         intervals={}
@@ -42,7 +42,7 @@ def send_message(bot, session):
         intervals['Восход солнца'] = time_intervals[1]
         intervals['Зухр'] = time_intervals[2]
         intervals['Аср по первой тени'] = time_intervals[3]
-        intervals['Аср по второй тени'] = time_intervals[4]
+
         intervals['Магриб'] = time_intervals[5]
         intervals['Иша'] = time_intervals[6]
 

@@ -107,13 +107,13 @@ def get_schedule(message):
         user_schedule.voshod_solnsa1 = dt.strftime(user_schedule.voshod_solnsa, "%H:%M")
         user_schedule.dhuhr1 = dt.strftime(user_schedule.dhuhr, "%H:%M")
         user_schedule.hanafi1= dt.strftime(user_schedule.hanafi, "%H:%M")
-        user_schedule.shafigi1 = dt.strftime(user_schedule.shafigi, "%H:%M")
+
         user_schedule.magrib1 = dt.strftime(user_schedule.magrib, "%H:%M")
         user_schedule.isha1 = dt.strftime(user_schedule.isha, "%H:%M")
         bot.send_message(message.chat.id,
-                        text="Расписание намаза на сегодня %s для города %s: \n Фаджр %s\n Восход солнца %s\n Зухр %s\n Аср по первой тени %s\n Аср по второй тени %s\n Магриб %s\n Иша %s" %
+                        text="Расписание намаза на сегодня %s для города %s: \n Фаджр %s\n Восход солнца %s\n Зухр %s\n Аср по первой тени %s\n  Магриб %s\n Иша %s" %
                             (user_schedule.fajr22,user_schedule.city, user_schedule.fajr11, user_schedule.voshod_solnsa1, user_schedule.dhuhr1, user_schedule.hanafi1,
-                            user_schedule.shafigi1, user_schedule.magrib1, user_schedule.isha1))
+                             user_schedule.magrib1, user_schedule.isha1))
 @bot.message_handler(regexp= 'Ближайший намаз')
 def get_closertime(message):
     user_id = message.from_user.id
@@ -124,7 +124,7 @@ def get_closertime(message):
         user_schedule = session.query(Schedule). \
             filter(cast(Schedule.hanafi, Date) == date.today()). \
             filter(Schedule.city == user.city).first()
-        list_schedule = [user_schedule.fajr, user_schedule.voshod_solnsa, user_schedule.dhuhr, user_schedule.hanafi, user_schedule.shafigi, user_schedule.magrib,user_schedule.isha]
+        list_schedule = [user_schedule.fajr, user_schedule.voshod_solnsa, user_schedule.dhuhr, user_schedule.hanafi, user_schedule.magrib,user_schedule.isha]
         time_intervals = []
         for time in list_schedule:
             interval = time-dt.now()
@@ -147,7 +147,7 @@ def get_closertime(message):
         intervals['Восход солнца'] = time_intervals[1]
         intervals['Зухр'] = time_intervals[2]
         intervals['Аср по первой тени'] = time_intervals[3]
-        intervals['Аср по второй тени'] = time_intervals[4]
+
         intervals['Магриб'] = time_intervals[5]
         intervals['Иша'] = time_intervals[6]
 
@@ -165,12 +165,11 @@ def get_closertime(message):
                 change_time = ':'.join(str(min_time).split(':')[:2])
                 if change_time[0] == '0':
                     bot.send_message(message.chat.id,
-                                    text='{n} через {name[2]}{name[3]} минут(ы)'.format(n=key,
-                                                                                                     name=change_time))
+                                    text='{n} через {name[2]}{name[3]} минут(ы)'.format(n=key,name=change_time))
                 else:
                     bot.send_message(message.chat.id,
-                                    text='{n} через {name[0]} час(ов) {name[2]}{name[3]} минут(ы)'.format(
-                                        n=key, name=change_time))
+                                    text='{n} через {name[0]} час(ов) {name[2]}{name[3]} минут(ы)'.format(n=key,
+                                                                                                          name=change_time))
 
         return
 
