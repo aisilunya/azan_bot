@@ -1,0 +1,4 @@
+future==0.15.2
+psycopg2==2.6.1
+pyTelegramBotAPI==2.1.5
+SQLAlchemy==1.0.13

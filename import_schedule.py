@@ -3,7 +3,7 @@ from model import Schedule
 from sqlalchemy.orm import sessionmaker
 from create import *
 Session = sessionmaker(bind=engine)
-importfile = "shedule_2016.csv"
+importfile = "shedule_2017.csv"
 session = Session()
 
 with open (importfile, newline = '\n') as csvfile:
@@ -15,15 +15,14 @@ with open (importfile, newline = '\n') as csvfile:
             keyslist4 = [row[1], row[5]]
             keyslist5 = [row[1], row[6]]
             keyslist6 = [row[1], row[7]]
-            keyslist7 = [row[1], row[8]]
+
             keys1 = ' '.join(keyslist1)
             keys2 = ' '.join(keyslist2)
             keys3 = ' '.join(keyslist3)
             keys4 = ' '.join(keyslist4)
             keys5 = ' '.join(keyslist5)
             keys6 = ' '.join(keyslist6)
-            keys7 = ' '.join(keyslist7)
 
-            h = Schedule(row[0], keys1, keys2, keys3, keys4, keys5, keys6, keys7)
+            h = Schedule(row[0], keys1, keys2, keys3, keys4, keys5, keys6)
             session.add(h)
 session.commit()
